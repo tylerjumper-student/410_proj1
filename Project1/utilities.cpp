@@ -51,9 +51,9 @@ int loadData(const char* filename){
 		tmp.start_time = stoi(string_startTime);
 		tmp.cpu_time = stoi(string_cpuTime);
 
-
+		//push process_stat object into the vector
 		myVector.push_back(tmp);
-		std::cout<<tmp.process_number<<","<<tmp.start_time<<","<<tmp.cpu_time<<std::endl;
+		//std::cout<<tmp.process_number<<","<<tmp.start_time<<","<<tmp.cpu_time<<std::endl;
 	}
 	//into process_stats structs
 	//and add these structs to a vector
@@ -82,16 +82,25 @@ int saveData(const char* filename){
 //sorts the vector, returns nothing (thats what void means)
 //sorts low to high
 void sortData(SORT_ORDER mySortOrder){
-	//int smaller;
+	std::cout<<"before"<<std::endl;
+	for(int i = 0 ; i < int(myVector.size()) ; i++){
+				std::cout<<myVector[i].process_number<<", "<<myVector[i].start_time<<", "<<myVector[i].cpu_time<<std::endl;
+			}
+	for(int i = 0 ; i < int(myVector.size()) ; i++){
+		for(int j = 0 ; j <int(myVector.size())-i ; j++){
+			if(myVector[j].cpu_time > myVector[j+1].cpu_time){
+			process_stats tmp = myVector[j];
+			myVector[j] = myVector[j+1];
+			myVector[j+1] = tmp;
+			}
 
-//	for(int i = 0 ; i < int(myVector.size()) ; i++){
-//		if(myVector[i].){
-//			smaller = myVector[i+1];
-//			myVector[i+1] = myVector[i];
-//			myVector = smaller;
-//		}
-//	}
 
+		}
+	}
+	std::cout<<"after"<<std::endl;
+	for(int i = 0 ; i < int(myVector.size()) ; i++){
+			std::cout<<myVector[i].process_number<<", "<<myVector[i].start_time<<", "<<myVector[i].cpu_time<<std::endl;
+		}
 }
 
 //return the first struct in the vector
