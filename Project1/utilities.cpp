@@ -53,9 +53,8 @@ int loadData(const char* filename){
 
 		//push process_stat object into the vector
 		myVector.push_back(tmp);
-		//std::cout<<tmp.process_number<<","<<tmp.start_time<<","<<tmp.cpu_time<<std::endl;
 	}
-	//into process_stats structs
+
 	//and add these structs to a vector
 
 	inFile.close();
@@ -68,14 +67,21 @@ int loadData(const char* filename){
 //if the file exists, overwrite its contents.
 //returns SUCCESS if all goes well or COULD_NOT_OPEN_FILE
 int saveData(const char* filename){
-	std::ofstream inFile;
-	inFile.open(filename);
+	std::ofstream outFile;
+	outFile.open(filename);
 
-	if(!inFile.is_open()){
+	if(!outFile.is_open()){
 			return COULD_NOT_OPEN_FILE;
 		}
+	if(!outFile.good()){
+		outFile.clear();
+	}
+	//write to filename
+	for(int i = 0 ; i < int(myVector.size()) ; i++){
+		outFile<<myVector[i].process_number<<","<<myVector[i].start_time<<","<<myVector[i].cpu_time<<std::endl;
+	}
 
-	inFile.close();
+	outFile.close();
 	return SUCCESS;
 }
 
@@ -92,7 +98,6 @@ void sortData(SORT_ORDER mySortOrder){
 			}
 		}
 	}
-
 }
 
 //return the first struct in the vector
